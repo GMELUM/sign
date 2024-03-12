@@ -8,7 +8,6 @@ import (
 	"sort"
 	"strconv"
 	"strings"
-	"time"
 )
 
 var hashSecret []byte
@@ -19,7 +18,6 @@ type Params struct {
 	LastName  string     `json:"last_name"`
 	UserName  string     `json:"username"`
 	PhotoURL  string     `json:"photo_url"`
-	AuthDate  *time.Time `json:"auth_date"`
 }
 
 func Validate(params string, secret string) (Params, bool) {
@@ -36,7 +34,6 @@ func Validate(params string, secret string) (Params, bool) {
 	}
 
 	var (
-		authDate time.Time
 		hash     string
 		pairs    = make([]string, 0, len(query))
 	)
@@ -45,11 +42,6 @@ func Validate(params string, secret string) (Params, bool) {
 		if k == "hash" {
 			hash = v[0]
 			continue
-		}
-		if k == "auth_date" {
-			if i, err := strconv.Atoi(v[0]); err == nil {
-				authDate = time.Unix(int64(i), 0)
-			}
 		}
 		pairs = append(pairs, k+"="+v[0])
 	}
@@ -78,7 +70,6 @@ func Validate(params string, secret string) (Params, bool) {
 			LastName:  query.Get("last_name"),
 			UserName:  query.Get("username"),
 			PhotoURL:  query.Get("photo_url"),
-			AuthDate:  &authDate,
 		}, true
 	}
 

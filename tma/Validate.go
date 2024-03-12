@@ -7,9 +7,7 @@ import (
 	"encoding/json"
 	"net/url"
 	"sort"
-	"strconv"
 	"strings"
-	"time"
 )
 
 var hashSecret []byte
@@ -30,7 +28,6 @@ type Params struct {
 	User         *User      `json:"user"`
 	ChatType     *string    `json:"chat_type"`
 	ChatInstance *string    `json:"chat_instance"`
-	AuthDate     *time.Time `json:"auth_date"`
 }
 
 func Validate(params, secret string) (Params, bool) {
@@ -47,7 +44,6 @@ func Validate(params, secret string) (Params, bool) {
 	}
 
 	var (
-		authDate time.Time
 		hash     string
 		pairs    = make([]string, 0, len(query))
 	)
@@ -56,11 +52,6 @@ func Validate(params, secret string) (Params, bool) {
 		if k == "hash" {
 			hash = v[0]
 			continue
-		}
-		if k == "auth_date" {
-			if i, err := strconv.Atoi(v[0]); err == nil {
-				authDate = time.Unix(int64(i), 0)
-			}
 		}
 		pairs = append(pairs, k+"="+v[0])
 	}
@@ -73,6 +64,8 @@ func Validate(params, secret string) (Params, bool) {
 
 	impHmac := hmac.New(sha256.New, hashSecret)
 	impHmac.Write([]byte(strings.Join(pairs, "\n")))
+
+	println(hex.EncodeToString(impHmac.Sum(nil)))
 
 	isValid := hex.EncodeToString(impHmac.Sum(nil)) == hash
 	if isValid {
@@ -96,10 +89,6 @@ func Validate(params, secret string) (Params, bool) {
 		chatInstance := query.Get("chat_instance")
 		if chatInstance != "" {
 			param.ChatInstance = &chatInstance
-		}
-
-		if !authDate.IsZero() {
-			param.AuthDate = &authDate
 		}
 
 		return *param, true
