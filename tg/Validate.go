@@ -8,19 +8,13 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/gmelum/sign/types"
 )
 
 var hashSecret []byte
 
-type Params struct {
-	ID        int        `json:"id"`
-	FirstName string     `json:"first_name"`
-	LastName  string     `json:"last_name"`
-	UserName  string     `json:"username"`
-	PhotoURL  string     `json:"photo_url"`
-}
-
-func Validate(params string, secret string) (Params, bool) {
+func Validate(params string, secret string) (types.TGUser, bool) {
 
 	if hashSecret == nil {
 		hash := sha256.New()
@@ -30,7 +24,7 @@ func Validate(params string, secret string) (Params, bool) {
 
 	query, err := url.ParseQuery(params)
 	if err != nil {
-		return Params{}, false
+		return types.TGUser{}, false
 	}
 
 	var (
@@ -47,7 +41,7 @@ func Validate(params string, secret string) (Params, bool) {
 	}
 
 	if hash == "" {
-		return Params{}, false
+		return types.TGUser{}, false
 	}
 
 	sort.Strings(pairs)
@@ -64,7 +58,7 @@ func Validate(params string, secret string) (Params, bool) {
 			IDint = 0
 		}
 
-		return Params{
+		return types.TGUser{
 			ID:        IDint,
 			FirstName: query.Get("first_name"),
 			LastName:  query.Get("last_name"),
@@ -73,6 +67,6 @@ func Validate(params string, secret string) (Params, bool) {
 		}, true
 	}
 
-	return Params{}, false
+	return types.TGUser{}, false
 
 }
