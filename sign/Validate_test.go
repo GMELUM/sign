@@ -9,9 +9,15 @@ func TestValidate(t *testing.T) {
 	var secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
 	var hash = "b574755cfbb1a253c92477367b5d77af69df8d59553d72b9f315a99ea975d5c4"
 
+	var item = make(map[string]interface{})
+	item["item"] = "coin"
+	item["count"] = 1000
+
 	var params = make(map[string]interface{})
-	params["type"] = "entry"
-	params["count"] = 1
+	params["user"] = 3
+	params["order"] = 5
+	params["task"] = 9
+	params["items"] = []map[string]interface{}{item}
 
 	isValid, err := Validate(params, secret, hash)
 	if err != nil {

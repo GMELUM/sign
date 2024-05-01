@@ -13,7 +13,7 @@ func Validate(data map[string]interface{}, secret string, hash string) (bool, er
 
 	var buffer bytes.Buffer
 
-	keys := make([]string, len(data))
+	var keys []string
 	for key := range data {
 		keys = append(keys, key)
 	}
@@ -31,6 +31,9 @@ func Validate(data map[string]interface{}, secret string, hash string) (bool, er
 		hash.Write([]byte(secret))
 		hashSecret = hash.Sum(nil)
 	}
+
+	value := buffer.String()
+	println(value)
 
 	impHmac := hmac.New(sha256.New, hashSecret)
 	impHmac.Write(buffer.Bytes())

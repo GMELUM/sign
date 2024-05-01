@@ -8,9 +8,15 @@ func TestCreate(t *testing.T) {
 
 	var secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
 
+	var item = make(map[string]interface{})
+	item["item"] = "coin"
+	item["count"] = 1000
+
 	var params = make(map[string]interface{})
-	params["type"] = "entry"
-	params["count"] = 1
+	params["user"] = 3
+	params["order"] = 5
+	params["task"] = 9
+	params["items"] = []map[string]interface{}{item}
 
 	token, err := Create(params, secret)
 	if err != nil {
