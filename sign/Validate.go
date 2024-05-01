@@ -20,8 +20,10 @@ func Validate(data map[string]interface{}, secret string, hash string) (bool, er
 	sort.Strings(keys)
 
 	for _, key := range keys {
-		buffer.WriteString(key)
-		buffer.WriteString(fmt.Sprintf("%v", data[key]))
+		if key != "hash" {
+			buffer.WriteString(key)
+			buffer.WriteString(fmt.Sprintf("%v", data[key]))
+		}
 	}
 
 	if hashSecret == nil {
