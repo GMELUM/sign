@@ -6,7 +6,7 @@ import (
 
 func TestCreate(t *testing.T) {
 
-	var secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
+	var secret = "gqavgurwpvghztmbudygfdquvrfnswrfhbrowozngptjubewde"
 
 	var item = make(map[string]interface{})
 	item["item"] = "coin"

@@ -7,18 +7,9 @@ import (
 	"encoding/hex"
 	"fmt"
 	"sort"
-	"strings"
 )
 
 var hashSecret []byte
-
-func MapToQueryString(data map[string]interface{}) string {
-	var sb strings.Builder
-	for k, v := range data {
-	 sb.WriteString(fmt.Sprintf("%s=%v&", k, v))
-	}
-	return strings.TrimSuffix(sb.String(), "&")
-   }
 
 func Create(data map[string]interface{}, secret string) (string, error) {
 

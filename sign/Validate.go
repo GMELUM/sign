@@ -32,9 +32,6 @@ func Validate(data map[string]interface{}, secret string, hash string) (bool, er
 		hashSecret = hash.Sum(nil)
 	}
 
-	value := buffer.String()
-	println(value)
-
 	impHmac := hmac.New(sha256.New, hashSecret)
 	impHmac.Write(buffer.Bytes())
 
