@@ -8,9 +8,9 @@ func TestCreate(t *testing.T) {
 
 	var secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
 
-	var params = make(map[string]string)
+	var params = make(map[string]interface{})
 	params["type"] = "entry"
-	params["count"] = "1"
+	params["count"] = 1
 
 	token, err := Create(params, secret)
 	if err != nil {
@@ -27,9 +27,9 @@ func BenchmarkCreate(b *testing.B) {
 
 	var secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
 
-	var params = make(map[string]string)
+	var params = make(map[string]interface{})
 	params["type"] = "entry"
-	params["count"] = "1"
+	params["count"] = 1
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

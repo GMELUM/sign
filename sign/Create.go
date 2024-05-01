@@ -5,12 +5,13 @@ import (
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"sort"
 )
 
 var hashSecret []byte
 
-func Create(data map[string]string, secret string) (string, error) {
+func Create(data map[string]interface{}, secret string) (string, error) {
 
 	var buffer bytes.Buffer
 
@@ -22,7 +23,7 @@ func Create(data map[string]string, secret string) (string, error) {
 
 	for _, key := range keys {
 		buffer.WriteString(key)
-		buffer.WriteString(data[key])
+		buffer.WriteString(fmt.Sprintf("%v", data[key]))
 	}
 
 	if hashSecret == nil {
