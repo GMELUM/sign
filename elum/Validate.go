@@ -5,26 +5,23 @@ import (
 	"crypto/cipher"
 	"encoding/hex"
 
-	"github.com/gmelum/sign/types"
 	"github.com/vmihailenco/msgpack/v5"
 )
 
-func Validate(token, secret string) (types.DecodeParams, bool) {
-
-	params := types.DecodeParams{}
+func Validate(token, secret string, params interface{}) bool {
 
 	data, err := hex.DecodeString(token)
 	if err != nil {
-		return params, false
+		return false
 	}
 
 	block, err := aes.NewCipher([]byte(secret))
 	if err != nil {
-		return params, false
+		return false
 	}
 
 	if len(data) < aes.BlockSize {
-		return params, false
+		return false
 	}
 	iv := data[:aes.BlockSize]
 	data = data[aes.BlockSize:]
@@ -32,11 +29,8 @@ func Validate(token, secret string) (types.DecodeParams, bool) {
 	stream := cipher.NewCFBDecrypter(block, iv)
 	stream.XORKeyStream(data, data)
 
-	err = msgpack.Unmarshal(data, &params)
-	if err != nil {
-		return params, false
-	}
+	err = msgpack.Unmarshal(data, params)
 
-	return params, true
+	return err == nil
 
 }

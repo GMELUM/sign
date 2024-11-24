@@ -30,7 +30,8 @@ func TestValidate(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	data, isValid := Validate(token, Secret)
+	data := types.DecodeParams{}
+	isValid := Validate(token, Secret, &data)
 	if !isValid {
 		t.Errorf("is not valid token")
 	}
@@ -74,8 +75,11 @@ func BenchmarkValidate(b *testing.B) {
 		b.Errorf(err.Error())
 	}
 
+	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
-		Validate(token, Secret)
+		params := types.DecodeParams{}
+		Validate(token, Secret, &params)
 	}
 
 }

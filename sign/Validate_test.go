@@ -6,7 +6,7 @@ import (
 
 func TestValidate(t *testing.T) {
 
-	var secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
+	var secret = "8PogTmDn5uru9WPdXuup"
 	var hash = "b574755cfbb1a253c92477367b5d77af69df8d59553d72b9f315a99ea975d5c4"
 
 	var item = make(map[string]interface{})

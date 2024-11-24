@@ -8,18 +8,18 @@ import (
 
 func TestCreate(t *testing.T) {
 
-	var Secret = "37VE8WK547U7A0Q49CRHKDNIHLHGOCTR"
+	var Secret = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
 	var params = types.EncodeParams{
-		ID:       123,
+		ID:       1,
 		IP:       "127.0.0.1",
-		Platform: types.VKID,
+		Platform: types.TG,
 		Expires:  123,
 		User: types.User{
-			NID:       123,
+			NID:       1093776793,
 			FirstName: "Artur",
 			LastName:  "Frank",
-			UserName:  "GMELUM",
+			UserName:  "gmelum",
 			Language:  "EN",
 			IsPremium: true,
 		},

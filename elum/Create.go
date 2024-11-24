@@ -7,12 +7,10 @@ import (
 	"encoding/hex"
 	"io"
 
-	"github.com/gmelum/sign/types"
-
 	"github.com/vmihailenco/msgpack/v5"
 )
 
-func Create(data *types.EncodeParams, secret string) (string, error) {
+func Create(data interface{}, secret string) (string, error) {
 
 	params, err := msgpack.Marshal(data)
 	if err != nil {
