@@ -95,7 +95,7 @@ func Validate(params string, secret string) (types.TGUser, bool) {
 	// Compute the HMAC-SHA256 of the "data-check-string".
 	// HMAC ensures the integrity and authenticity of the data.
 	impHmac := hmac.New(sha256.New, hashSecret[:])
-	impHmac.Write(buffer[:bufPos]) // Feed the buffer data into the HMAC function.
+	impHmac.Write(buffer[:bufPos])                       // Feed the buffer data into the HMAC function.
 	computedHash := hex.EncodeToString(impHmac.Sum(nil)) // Convert the HMAC result to a hex string.
 
 	// Compare the computed hash with the provided hash.
@@ -129,9 +129,9 @@ func Validate(params string, secret string) (types.TGUser, bool) {
 		case "first_name":
 			user.FirstName = value // Set the user's first name.
 		case "last_name":
-			user.LastName = value  // Set the user's last name.
+			user.LastName = value // Set the user's last name.
 		case "username":
-			user.UserName = value  // Set the user's username.
+			user.UserName = value // Set the user's username.
 		case "photo_url":
 			user.PhotoURL = value // Set the user's photo URL.
 		}
